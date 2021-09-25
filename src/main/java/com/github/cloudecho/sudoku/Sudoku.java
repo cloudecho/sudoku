@@ -42,7 +42,6 @@ public class Sudoku {
         gui.repaintGui();
     }
 
-    // TODO reset
     void reset() {
         for (int i = 0; i < model.row; i++) {
             for (int j = 0; j < model.col; j++) {
@@ -135,6 +134,7 @@ public class Sudoku {
     void clearDigit() {
         if (solved()) {
             System.out.println("solved, could not clear digit");
+            return;
         }
 
         if (!canEdit(currGrid)) {
