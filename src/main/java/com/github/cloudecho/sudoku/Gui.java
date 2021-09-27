@@ -11,11 +11,12 @@ class Gui extends JFrame {
     private static final long serialVersionUID = 1L;
     public static final int UNIT_SIZE = 56;
     public static final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, UNIT_SIZE / 2);
-    public static final Font FONT2 = new Font(Font.MONOSPACED, Font.PLAIN, UNIT_SIZE / 3);
+    public static final Font FONT2 = new Font(Font.MONOSPACED, Font.PLAIN, 3 * UNIT_SIZE / 10);
 
     private MPanel matrix;
     private JComponent main;
 
+    private final JButton btnPuzzle = new JButton(LABEL_PUZZLE);
     private final JButton btnRestart = new JButton(LABEL_RESTART);
     private final JButton btnReset = new JButton(LABEL_RESET);
     private final ButtonGroup buttonGroupLevel = new ButtonGroup();
@@ -47,6 +48,7 @@ class Gui extends JFrame {
         btnEasy.setFont(FONT2);
         btnNormal.setFont(FONT2);
         btnHard.setFont(FONT2);
+        btnPuzzle.setFont(FONT2);
         btnReset.setFont(FONT2);
         btnRestart.setFont(FONT2);
 
@@ -59,6 +61,7 @@ class Gui extends JFrame {
         north.add(btnNormal);
         north.add(btnHard);
         north.add(Box.createHorizontalGlue());
+        north.add(btnPuzzle);
         north.add(btnReset);
         north.add(btnRestart);
 
@@ -118,11 +121,27 @@ class Gui extends JFrame {
         }
     }
 
+    private static final String LABEL_PUZZLE = "PUZZLE";
+    private static final String LABEL_DONE = "DONE";
     private static final String LABEL_SOLVED = "SOLVED";
     private static final String LABEL_RESET = "RESET";
     private static final String LABEL_RESTART = "RESTART";
 
     private void addListeners(final Sudoku sudoku) {
+        this.btnPuzzle.addActionListener((actionEvent) -> {
+            if (LABEL_PUZZLE.equals(btnPuzzle.getText())) {
+                sudoku.startPuzzle();
+                btnPuzzle.setText(LABEL_DONE);
+                btnReset.setEnabled(false);
+                btnRestart.setEnabled(false);
+            } else {
+                sudoku.endPuzzle();
+                btnPuzzle.setText(LABEL_PUZZLE);
+                btnReset.setEnabled(true);
+                btnRestart.setEnabled(true);
+            }
+        });
+
         this.btnReset.addActionListener((actionEvent) -> {
             if (LABEL_RESET.equals(btnReset.getText())) {
                 sudoku.reset();

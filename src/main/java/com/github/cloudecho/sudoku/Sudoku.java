@@ -15,6 +15,7 @@ public class Sudoku {
 
     public static final int STATE_SOLVING = 1;
     public static final int STATE_SOLVED = 2;
+    public static final int STATE_PUZZLING = 3;
 
     Model model = new Model(ROW, COL);
     private final Gui gui = new Gui(this);
@@ -121,7 +122,9 @@ public class Sudoku {
         }
         byte digit = (byte) (keycode - '0');
         boolean ok = checkInput(digit);
-        byte n = Colors.withColor(digit, Colors.indexOf(ok ? Colors.INPUT_TEXT_COLOR : Colors.ERROR_TEXT_COLOR));
+        byte n = Colors.withColor(digit, Colors.indexOf(!ok ?
+                Colors.ERROR_TEXT_COLOR :
+                puzzling() ? Colors.DEFAULT_TEXT_COLOR : Colors.INPUT_TEXT_COLOR));
         model.update(currGrid.y, currGrid.x, n);
         gui.repaintGui();
 
@@ -145,8 +148,25 @@ public class Sudoku {
     }
 
     private boolean canEdit(Point pos) {
+        if (puzzling()) {
+            return true;
+        }
         byte n = model.get(pos.y, pos.x);
         return n <= 0 || n > Model.MAX_NUM;
+    }
+
+    private boolean puzzling() {
+        return STATE_PUZZLING == this.state;
+    }
+
+    void startPuzzle() {
+        model.reset();
+        changeState(STATE_PUZZLING);
+        gui.repaintGui();
+    }
+
+    void endPuzzle() {
+        changeState(STATE_SOLVING);
     }
 
     /**

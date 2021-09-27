@@ -168,6 +168,14 @@ public class Model {
         }
     }
 
+    public void reset() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                m[i][j] = 0;
+            }
+        }
+    }
+
     private int maxHides(float probability) {
         return (int) Math.ceil(row * col * probability);
     }
