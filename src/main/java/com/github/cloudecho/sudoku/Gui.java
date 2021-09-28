@@ -1,5 +1,3 @@
-
-
 package com.github.cloudecho.sudoku;
 
 import javax.swing.*;
@@ -201,7 +199,7 @@ class Gui extends JFrame {
                         sudoku.clearDigit();
                         break;
                     default:
-                        System.out.println("keyCode=" + keyCode);
+                        Log.warn("keyCode=" + keyCode);
                 }
             }
         });
@@ -224,7 +222,7 @@ class Gui extends JFrame {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.warn(e);
                 }
             }
         }

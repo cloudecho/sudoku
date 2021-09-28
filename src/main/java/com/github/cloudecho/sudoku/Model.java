@@ -28,7 +28,7 @@ public class Model {
         for (int i = 1; ; i++) {
             this.reset();
             if (random0()) {
-                System.out.println("success at trial #" + i);
+                Log.info("success at trial #" + i);
                 break;
             }
         }
@@ -353,12 +353,12 @@ public class Model {
             final Model c = model.modelClone();
             for (long i = trial.get(); !solved.get(); i = trial.incrementAndGet()) {
                 if (0 == i % 1_000_000) {
-                    System.out.println(Thread.currentThread().getName() + " trial #" + i);
+                    Log.info("trial #" + i);
                 }
                 if (c.random0()) {
                     // find an answer
                     synchronized (model) {
-                        System.out.println(Thread.currentThread().getName() + " success at trial #" + i);
+                        Log.info("success at trial #" + i);
                         solved.set(true);
                         c.copym(model);
                     }
@@ -368,7 +368,7 @@ public class Model {
                 model.copym(c);
             }
 
-            System.out.println(Thread.currentThread().getName() + " done");
+            Log.info("done");
             latch.countDown();
         }
     }
@@ -429,7 +429,7 @@ public class Model {
         // 0 0 1 | 0 0 0 | 0 6 8
         // 0 0 8 | 5 0 0 | 0 1 0
         // 0 9 0 | 0 0 0 | 4 0 0
-        System.out.println(model);
+        Log.info(model);
 
         model.solve();
 
@@ -444,7 +444,7 @@ public class Model {
         // 5 2 1 | 9 7 4 | 3 6 8
         // 4 3 8 | 5 2 6 | 9 1 7
         // 7 9 6 | 3 1 8 | 4 5 2
-        System.out.println(model);
-        System.out.println("solved: " + model.isSolved());
+        Log.info(model);
+        Log.info("solved:", model.isSolved());
     }
 }

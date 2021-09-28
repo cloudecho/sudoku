@@ -1,5 +1,3 @@
-
-
 package com.github.cloudecho.sudoku;
 
 import javax.swing.*;
@@ -32,7 +30,7 @@ public class Sudoku {
     private void init(float level) {
         changeState(STATE_SOLVING);
         this.model.random();
-        System.out.println(this.model);
+        Log.info(this.model);
 
         this.model.hideDigits(level);
         this.computeCurrGrid();
@@ -109,7 +107,7 @@ public class Sudoku {
 
     void inputDigit(int keycode) {
         if (solved()) {
-            System.out.println("solved, could not input digit");
+            Log.warn("solved, could not input digit");
             return;
         }
 
@@ -136,7 +134,7 @@ public class Sudoku {
 
     void clearDigit() {
         if (solved()) {
-            System.out.println("solved, could not clear digit");
+            Log.warn("solved, could not clear digit");
             return;
         }
 
@@ -216,7 +214,7 @@ public class Sudoku {
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.warn(e);
         }
 
         new Sudoku();

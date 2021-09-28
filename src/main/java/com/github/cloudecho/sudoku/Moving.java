@@ -1,4 +1,3 @@
-
 package com.github.cloudecho.sudoku;
 
 class Moving {
