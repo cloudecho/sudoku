@@ -47,7 +47,7 @@ public class Sudoku {
         for (int i = 0; i < model.row; i++) {
             for (int j = 0; j < model.col; j++) {
                 if (model.get(i, j) > Model.MAX_NUM) {
-                    model.update(i, j, (byte) 0);
+                    model.set(i, j, (byte) 0);
                 }
             }
         }
@@ -125,11 +125,11 @@ public class Sudoku {
         byte n = Colors.withColor(digit, Colors.indexOf(!ok ?
                 Colors.ERROR_TEXT_COLOR :
                 puzzling() ? Colors.DEFAULT_TEXT_COLOR : Colors.INPUT_TEXT_COLOR));
-        model.update(currGrid.y, currGrid.x, n);
+        model.set(currGrid.y, currGrid.x, n);
         gui.repaintGui();
 
         // check resolved
-        if (ok && model.solved()) {
+        if (ok && model.isSolved()) {
             changeState(STATE_SOLVED);
         }
     }
@@ -143,7 +143,7 @@ public class Sudoku {
         if (!canEdit(currGrid)) {
             return;
         }
-        model.update(currGrid.y, currGrid.x, (byte) 0);
+        model.set(currGrid.y, currGrid.x, (byte) 0);
         gui.repaintGui();
     }
 
