@@ -1,6 +1,7 @@
 package com.github.cloudecho.sudoku;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -104,7 +105,11 @@ public class Model {
                 continue;
             }
 
-            int w = randomIndex(unmarkedNum(a));
+            final int n = unmarkedNum(a);
+            if (0 == n) {
+                return false;
+            }
+            int w = randomIndex(n);
             boolean found = false;
 
             for (int i = 0; i < a.length; i++) {
@@ -241,7 +246,7 @@ public class Model {
     }
 
     private int randomIndex(int n) {
-        return (int) (Math.random() * n);
+        return ThreadLocalRandom.current().nextInt(n);
     }
 
     public boolean isSolved() {
