@@ -211,12 +211,13 @@ public class Sudoku {
     }
 
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (Exception e) {
-            Log.warn(e);
-        }
-
-        new Sudoku();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception e) {
+                Log.warn(e);
+            }
+            new Sudoku();
+        });
     }
 }
